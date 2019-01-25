@@ -1,8 +1,13 @@
 CMakeCache.txt
 CMakeFiles
+Makefile
 src/ConnectFour
+src/ConnectFour.exe
+src/cmake_install.cmake
 test/runTests
+test/runTests.exe
 googletest/googletest-build
 googletest/googlemock-build
-*.cmake
-Makefile
+test/lib
+test/cmake_install.cmake
+test/CTestTestfile.cmake
