@@ -56,6 +56,17 @@ CMAKE_BINARY_DIR = /home/nick/Code/connect-four/test
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
+
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -67,16 +78,16 @@ rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
 
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
+# Special rule for the target test
+test/fast: test
 
-.PHONY : edit_cache/fast
+.PHONY : test/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -149,6 +160,73 @@ gtest_main/fast:
 	$(MAKE) -f /home/nick/Code/connect-four/googletest/googletest-build/CMakeFiles/gtest_main.dir/build.make /home/nick/Code/connect-four/googletest/googletest-build/CMakeFiles/gtest_main.dir/build
 .PHONY : gtest_main/fast
 
+#=============================================================================
+# Target rules for targets named Main
+
+# Build rule for target.
+Main: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Main
+.PHONY : Main
+
+# fast build rule for target.
+Main/fast:
+	$(MAKE) -f /home/nick/Code/connect-four/src-build/CMakeFiles/Main.dir/build.make /home/nick/Code/connect-four/src-build/CMakeFiles/Main.dir/build
+.PHONY : Main/fast
+
+GameTest.o: GameTest.cc.o
+
+.PHONY : GameTest.o
+
+# target to build an object file
+GameTest.cc.o:
+	$(MAKE) -f CMakeFiles/runTests.dir/build.make CMakeFiles/runTests.dir/GameTest.cc.o
+.PHONY : GameTest.cc.o
+
+GameTest.i: GameTest.cc.i
+
+.PHONY : GameTest.i
+
+# target to preprocess a source file
+GameTest.cc.i:
+	$(MAKE) -f CMakeFiles/runTests.dir/build.make CMakeFiles/runTests.dir/GameTest.cc.i
+.PHONY : GameTest.cc.i
+
+GameTest.s: GameTest.cc.s
+
+.PHONY : GameTest.s
+
+# target to generate assembly for a file
+GameTest.cc.s:
+	$(MAKE) -f CMakeFiles/runTests.dir/build.make CMakeFiles/runTests.dir/GameTest.cc.s
+.PHONY : GameTest.cc.s
+
+PlayerTest.o: PlayerTest.cc.o
+
+.PHONY : PlayerTest.o
+
+# target to build an object file
+PlayerTest.cc.o:
+	$(MAKE) -f CMakeFiles/runTests.dir/build.make CMakeFiles/runTests.dir/PlayerTest.cc.o
+.PHONY : PlayerTest.cc.o
+
+PlayerTest.i: PlayerTest.cc.i
+
+.PHONY : PlayerTest.i
+
+# target to preprocess a source file
+PlayerTest.cc.i:
+	$(MAKE) -f CMakeFiles/runTests.dir/build.make CMakeFiles/runTests.dir/PlayerTest.cc.i
+.PHONY : PlayerTest.cc.i
+
+PlayerTest.s: PlayerTest.cc.s
+
+.PHONY : PlayerTest.s
+
+# target to generate assembly for a file
+PlayerTest.cc.s:
+	$(MAKE) -f CMakeFiles/runTests.dir/build.make CMakeFiles/runTests.dir/PlayerTest.cc.s
+.PHONY : PlayerTest.cc.s
+
 tests.o: tests.cpp.o
 
 .PHONY : tests.o
@@ -182,11 +260,19 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... runTests"
-	@echo "... edit_cache"
+	@echo "... test"
 	@echo "... gtest"
 	@echo "... gtest_main"
+	@echo "... Main"
+	@echo "... GameTest.o"
+	@echo "... GameTest.i"
+	@echo "... GameTest.s"
+	@echo "... PlayerTest.o"
+	@echo "... PlayerTest.i"
+	@echo "... PlayerTest.s"
 	@echo "... tests.o"
 	@echo "... tests.i"
 	@echo "... tests.s"

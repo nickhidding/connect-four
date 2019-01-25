@@ -1,6 +1,8 @@
 
-#include <iostream>
-#include <gtk/gtk.h>
+#include "GtkView.h"
+
+using namespace std;
+using namespace connectfour;
 
 static void print_hello (GtkWidget *widget, gpointer data) {
     g_print ("Hello World\n");
@@ -26,17 +28,13 @@ static void activate (GtkApplication *app, gpointer user_data) {
     gtk_widget_show_all (window);
 }
 
-int main(int argc, char **argv) {
-    std::cout << "Starting ConnectFour" << std::endl;
-
-    GtkApplication *app;
-    int status;
-
+GtkView::GtkView(int argc, char **argv) {
     app = gtk_application_new ("nl.xyza.connectfour", G_APPLICATION_FLAGS_NONE);
     g_signal_connect (app, "activate", G_CALLBACK (activate), NULL);
     status = g_application_run (G_APPLICATION (app), argc, argv);
     g_object_unref(app);
+}
 
-    std::cout << "Application stopped." << std::endl;
-    return status;
+void GtkView::update() {
+    std::cout << "GtkView.cpp -> update()" << std::endl;
 }

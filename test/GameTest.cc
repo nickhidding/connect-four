@@ -1,0 +1,24 @@
+
+#include "../src/Game.h"
+#include "../src/Player.h"
+#include <gtest/gtest.h>
+
+TEST(GameTest, ConstructorSinglePlayer) {
+    connectfour::Game game(1);
+    std::vector<connectfour::Player> players = game.getPlayers();
+    ASSERT_EQ(2, players.size());
+    ASSERT_EQ(false, players.at(0).getAi());
+    ASSERT_EQ(true, players.at(1).getAi());
+}
+
+TEST(GameTest, ConstructorTwoPlayers) {
+    connectfour::Game game(2);
+    std::vector<connectfour::Player> players = game.getPlayers();
+    ASSERT_EQ(2, players.size());
+    ASSERT_EQ(false, players.at(0).getAi());
+    ASSERT_EQ(false, players.at(1).getAi());
+}
+
+TEST(GameTest, ConstructorInvalidPlayers) {
+    ASSERT_DEATH(connectfour::Game game(2), "invalid number of players");
+}

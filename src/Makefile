@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/nick/Code/international-draughts
+CMAKE_SOURCE_DIR = /home/nick/Code/connect-four/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/nick/Code/international-draughts
+CMAKE_BINARY_DIR = /home/nick/Code/connect-four/src
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/nick/Code/international-draughts/CMakeFiles /home/nick/Code/international-draughts/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nick/Code/connect-four/src/CMakeFiles /home/nick/Code/connect-four/src/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/nick/Code/international-draughts/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nick/Code/connect-four/src/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -123,6 +123,114 @@ Main/fast:
 	$(MAKE) -f CMakeFiles/Main.dir/build.make CMakeFiles/Main.dir/build
 .PHONY : Main/fast
 
+Field.o: Field.cpp.o
+
+.PHONY : Field.o
+
+# target to build an object file
+Field.cpp.o:
+	$(MAKE) -f CMakeFiles/Main.dir/build.make CMakeFiles/Main.dir/Field.cpp.o
+.PHONY : Field.cpp.o
+
+Field.i: Field.cpp.i
+
+.PHONY : Field.i
+
+# target to preprocess a source file
+Field.cpp.i:
+	$(MAKE) -f CMakeFiles/Main.dir/build.make CMakeFiles/Main.dir/Field.cpp.i
+.PHONY : Field.cpp.i
+
+Field.s: Field.cpp.s
+
+.PHONY : Field.s
+
+# target to generate assembly for a file
+Field.cpp.s:
+	$(MAKE) -f CMakeFiles/Main.dir/build.make CMakeFiles/Main.dir/Field.cpp.s
+.PHONY : Field.cpp.s
+
+Game.o: Game.cpp.o
+
+.PHONY : Game.o
+
+# target to build an object file
+Game.cpp.o:
+	$(MAKE) -f CMakeFiles/Main.dir/build.make CMakeFiles/Main.dir/Game.cpp.o
+.PHONY : Game.cpp.o
+
+Game.i: Game.cpp.i
+
+.PHONY : Game.i
+
+# target to preprocess a source file
+Game.cpp.i:
+	$(MAKE) -f CMakeFiles/Main.dir/build.make CMakeFiles/Main.dir/Game.cpp.i
+.PHONY : Game.cpp.i
+
+Game.s: Game.cpp.s
+
+.PHONY : Game.s
+
+# target to generate assembly for a file
+Game.cpp.s:
+	$(MAKE) -f CMakeFiles/Main.dir/build.make CMakeFiles/Main.dir/Game.cpp.s
+.PHONY : Game.cpp.s
+
+GtkView.o: GtkView.cpp.o
+
+.PHONY : GtkView.o
+
+# target to build an object file
+GtkView.cpp.o:
+	$(MAKE) -f CMakeFiles/Main.dir/build.make CMakeFiles/Main.dir/GtkView.cpp.o
+.PHONY : GtkView.cpp.o
+
+GtkView.i: GtkView.cpp.i
+
+.PHONY : GtkView.i
+
+# target to preprocess a source file
+GtkView.cpp.i:
+	$(MAKE) -f CMakeFiles/Main.dir/build.make CMakeFiles/Main.dir/GtkView.cpp.i
+.PHONY : GtkView.cpp.i
+
+GtkView.s: GtkView.cpp.s
+
+.PHONY : GtkView.s
+
+# target to generate assembly for a file
+GtkView.cpp.s:
+	$(MAKE) -f CMakeFiles/Main.dir/build.make CMakeFiles/Main.dir/GtkView.cpp.s
+.PHONY : GtkView.cpp.s
+
+Player.o: Player.cpp.o
+
+.PHONY : Player.o
+
+# target to build an object file
+Player.cpp.o:
+	$(MAKE) -f CMakeFiles/Main.dir/build.make CMakeFiles/Main.dir/Player.cpp.o
+.PHONY : Player.cpp.o
+
+Player.i: Player.cpp.i
+
+.PHONY : Player.i
+
+# target to preprocess a source file
+Player.cpp.i:
+	$(MAKE) -f CMakeFiles/Main.dir/build.make CMakeFiles/Main.dir/Player.cpp.i
+.PHONY : Player.cpp.i
+
+Player.s: Player.cpp.s
+
+.PHONY : Player.s
+
+# target to generate assembly for a file
+Player.cpp.s:
+	$(MAKE) -f CMakeFiles/Main.dir/build.make CMakeFiles/Main.dir/Player.cpp.s
+.PHONY : Player.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -159,6 +267,18 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... Main"
 	@echo "... edit_cache"
+	@echo "... Field.o"
+	@echo "... Field.i"
+	@echo "... Field.s"
+	@echo "... Game.o"
+	@echo "... Game.i"
+	@echo "... Game.s"
+	@echo "... GtkView.o"
+	@echo "... GtkView.i"
+	@echo "... GtkView.s"
+	@echo "... Player.o"
+	@echo "... Player.i"
+	@echo "... Player.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
