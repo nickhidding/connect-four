@@ -22,6 +22,24 @@
         "string_view": "cpp",
         "system_error": "cpp",
         "type_traits": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "array": "cpp",
+        "cstdarg": "cpp",
+        "ctime": "cpp",
+        "deque": "cpp",
+        "forward_list": "cpp",
+        "list": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp",
+        "vector": "cpp",
+        "fstream": "cpp",
+        "functional": "cpp",
+        "iomanip": "cpp",
+        "memory": "cpp",
+        "optional": "cpp",
+        "sstream": "cpp",
+        "tuple": "cpp",
+        "utility": "cpp",
+        "algorithm": "cpp"
     }
 }

@@ -10,7 +10,7 @@ int main(int argc, char *argv[]) {
     std::cout << "Starting ConnectFour" << std::endl;
 
     Game game(2);
-    GtkView view(argc, argv);
+    GtkView view(&game, argc, argv);
 
     std::cout << "Application stopped." << std::endl;
     return 0; // status;

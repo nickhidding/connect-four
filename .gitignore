@@ -3,5 +3,6 @@ CMakeFiles
 src/ConnectFour
 test/runTests
 googletest/googletest-build
+googletest/googlemock-build
 *.cmake
 Makefile

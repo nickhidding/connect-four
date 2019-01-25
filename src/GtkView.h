@@ -5,6 +5,7 @@
 #include <iostream>
 #include <gtk/gtk.h>
 
+#include "Game.h"
 #include "IView.h"
 
 namespace connectfour {
@@ -17,13 +18,14 @@ namespace connectfour {
         GtkView& operator=(GtkView&&) = default;
         ~GtkView() = default;
 
-        GtkView(int argc, char **argv);
+        GtkView(Game *game, int argc, char **argv);
 
         void update();
 
     private:
-        GtkApplication *app;
-        int status;
+        GtkApplication *m_app;
+        Game *m_game;
+        int m_status;
     };
 }
 

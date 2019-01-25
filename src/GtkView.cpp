@@ -28,11 +28,16 @@ static void activate (GtkApplication *app, gpointer user_data) {
     gtk_widget_show_all (window);
 }
 
-GtkView::GtkView(int argc, char **argv) {
-    app = gtk_application_new ("nl.xyza.connectfour", G_APPLICATION_FLAGS_NONE);
-    g_signal_connect (app, "activate", G_CALLBACK (activate), NULL);
-    status = g_application_run (G_APPLICATION (app), argc, argv);
-    g_object_unref(app);
+GtkView::GtkView(Game *game, int argc, char **argv) {
+    // Attach to game updates
+    m_game = game;
+    m_game->attach(*this);
+
+    // Show GTK window
+    m_app = gtk_application_new ("nl.xyza.connectfour", G_APPLICATION_FLAGS_NONE);
+    g_signal_connect (m_app, "activate", G_CALLBACK (activate), NULL);
+    m_status = g_application_run (G_APPLICATION (m_app), argc, argv);
+    g_object_unref(m_app);
 }
 
 void GtkView::update() {

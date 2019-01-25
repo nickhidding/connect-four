@@ -16,3 +16,23 @@ Game::Game(int players) {
 std::vector<Player> Game::getPlayers() const {
     return std::vector<Player>(m_players);
 }
+
+void Game::attach(IView &view) {
+    m_observers.push_back(&view);
+};
+
+void Game::detach(IView &view) {
+    auto itr = std::find(m_observers.begin(), m_observers.end(), &view);
+    if (itr != m_observers.end())
+        m_observers.erase(itr);
+};
+
+void Game::notify() {
+    for (IView *observer : m_observers) {
+        observer->update();
+    }
+};
+
+std::vector<IView*> Game::getObservers() const {
+    return std::vector<IView*>(m_observers);
+};

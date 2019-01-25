@@ -2,8 +2,11 @@ cmake_minimum_required(VERSION 3.10)
 
 # Locate GTest
 set(GTEST_DIR ../googletest)
-add_subdirectory(${GTEST_DIR}/googletest
-                 ${GTEST_DIR}/googletest-build
+#add_subdirectory(${GTEST_DIR}/googletest
+#                 ${GTEST_DIR}/googletest-build
+#                 EXCLUDE_FROM_ALL)
+add_subdirectory(${GTEST_DIR}/googlemock
+                 ${GTEST_DIR}/googlemock-build
                  EXCLUDE_FROM_ALL)
 
 # find GTK3 package
@@ -15,7 +18,7 @@ set(PROGRAM_DIR ${PROJECT_SOURCE_DIR}/../src)
 include_directories(${PROGRAM_DIR})
 link_directories(${PROGRAM_DIR})
 #add_subdirectory(${PROGRAM_DIR} ${PROGRAM_DIR}/../src-build EXCLUDE_FROM_ALL)
-file(GLOB_RECURSE SOURCES ${PROGRAM_DIR}/*.h ${PROGRAM_DIR}/*.cpp)
+file(GLOB SOURCES ${PROGRAM_DIR}/*.h ${PROGRAM_DIR}/*.cpp)
 list(REMOVE_ITEM SOURCES ${PROGRAM_DIR}/main.cpp)
 
 # Link runTests with what we want to test and the GTest and pthread library
@@ -24,7 +27,7 @@ file(GLOB TEST "./*.cc")
 message(STATUS "found test sources= ${TEST}")
 message(STATUS "found sources= ${SOURCES}")
 add_executable(runTests tests.cpp ${TEST} ${SOURCES})
-target_link_libraries(runTests gtest_main)
+target_link_libraries(runTests gtest_main gmock_main)
 #target_link_libraries(runTests ConnectFour)
 
 # Include GTK3
