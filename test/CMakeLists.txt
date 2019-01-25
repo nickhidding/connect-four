@@ -6,16 +6,29 @@ add_subdirectory(${GTEST_DIR}/googletest
                  ${GTEST_DIR}/googletest-build
                  EXCLUDE_FROM_ALL)
 
+# find GTK3 package
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
+
 # Include sources
 set(PROGRAM_DIR ${PROJECT_SOURCE_DIR}/../src)
 include_directories(${PROGRAM_DIR})
 link_directories(${PROGRAM_DIR})
-add_subdirectory(${PROGRAM_DIR} ${PROGRAM_DIR}/../src-build EXCLUDE_FROM_ALL)
+#add_subdirectory(${PROGRAM_DIR} ${PROGRAM_DIR}/../src-build EXCLUDE_FROM_ALL)
+file(GLOB_RECURSE SOURCES ${PROGRAM_DIR}/*.h ${PROGRAM_DIR}/*.cpp)
+list(REMOVE_ITEM SOURCES ${PROGRAM_DIR}/main.cpp)
 
 # Link runTests with what we want to test and the GTest and pthread library
 enable_testing()
 file(GLOB TEST "./*.cc")
-message(STATUS "found sources= ${TEST}")
-add_executable(runTests tests.cpp ${TEST})
+message(STATUS "found test sources= ${TEST}")
+message(STATUS "found sources= ${SOURCES}")
+add_executable(runTests tests.cpp ${TEST} ${SOURCES})
 target_link_libraries(runTests gtest_main)
-target_link_libraries(runTests Main)
+#target_link_libraries(runTests ConnectFour)
+
+# Include GTK3
+include_directories(${GTK3_INCLUDE_DIRS})
+link_directories(${GTK3_LIBRARY_DIRS})
+target_link_libraries(runTests ${CMAKE_THREAD_LIBS_INIT} ${GTK3_LIBRARIES} )
+add_definitions(${GTK3_CFLAGS_OTHER})

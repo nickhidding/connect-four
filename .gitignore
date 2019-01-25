@@ -1,5 +1,7 @@
 CMakeCache.txt
 CMakeFiles
-./Main
+src/ConnectFour
+test/runTests
 googletest/googletest-build
 *.cmake
+Makefile

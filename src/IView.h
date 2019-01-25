@@ -2,7 +2,7 @@
 #ifndef IVIEW_H_
 #define IVIEW_H_
 
-namespace ConnectFour {
+namespace connectfour {
 
     class IView {
     public:

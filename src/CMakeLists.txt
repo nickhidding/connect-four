@@ -12,11 +12,11 @@ pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
 # Include entry point & sources
 include_directories("${PROJECT_BINARY_DIR}")
 file(GLOB SOURCES *.h *.cpp)
-add_executable(Main main.cpp ${SOURCES})
-set_property(TARGET Main PROPERTY ENABLE_EXPORTS true)
+add_executable(ConnectFour main.cpp ${SOURCES})
+set_property(TARGET ConnectFour PROPERTY ENABLE_EXPORTS true)
 
 # Include GTK3
 include_directories(${GTK3_INCLUDE_DIRS})
 link_directories(${GTK3_LIBRARY_DIRS})
-target_link_libraries(Main ${CMAKE_THREAD_LIBS_INIT} ${GTK3_LIBRARIES} )
+target_link_libraries(ConnectFour ${CMAKE_THREAD_LIBS_INIT} ${GTK3_LIBRARIES} )
 add_definitions(${GTK3_CFLAGS_OTHER})

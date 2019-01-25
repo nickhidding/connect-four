@@ -9,7 +9,7 @@
 
 namespace connectfour {
 
-    class GtkView {
+    class GtkView : public IView {
     public:
         GtkView(const GtkView&) = default;
         GtkView(GtkView&&) = default;

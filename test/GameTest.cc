@@ -20,5 +20,6 @@ TEST(GameTest, ConstructorTwoPlayers) {
 }
 
 TEST(GameTest, ConstructorInvalidPlayers) {
-    ASSERT_DEATH(connectfour::Game game(2), "invalid number of players");
+    ASSERT_THROW(connectfour::Game game(3), std::invalid_argument);
+    ASSERT_THROW(connectfour::Game game(0), std::invalid_argument);
 }
