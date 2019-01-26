@@ -4,7 +4,7 @@
 using namespace std;
 using namespace connectfour;
 
-Game::Game() {}
+Game::Game() : m_gameState(GameState::MENU) {}
 
 void Game::start(int players) {
     if (players < 1 || players > 2) {
@@ -14,6 +14,12 @@ void Game::start(int players) {
     m_players.push_back(Player("Player 1", false, "red"));
     m_players.push_back(Player("Player 2", (players == 1), "blue"));
     m_current_player = 0;
+    m_gameState = GameState::STARTED;
+    notify();
+}
+
+GameState Game::getState() const {
+    return m_gameState;
 }
 
 std::vector<Player> Game::getPlayers() const {

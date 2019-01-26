@@ -8,6 +8,7 @@
 
 #include "Player.h"
 #include "IView.h"
+#include "GameState.h"
 
 namespace connectfour {
 
@@ -23,6 +24,12 @@ namespace connectfour {
 
         void start(int players);
 
+        GameState getState() const;
+
+        Player getCurrentPlayer() const;
+
+        void getGrid(); // TODO return info
+
         void attach(IView &view);
         void detach(IView &view);
         void notify();
@@ -30,6 +37,7 @@ namespace connectfour {
 
         std::vector<Player> getPlayers() const;
     private:
+        GameState m_gameState;
         std::vector<Player> m_players;
         std::vector<IView*> m_observers;
         int m_current_player;
