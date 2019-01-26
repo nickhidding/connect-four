@@ -8,8 +8,9 @@
 
 using ::testing::AtLeast;
 
-TEST(GameTest, ConstructorSinglePlayer) {
-    connectfour::Game game(1);
+TEST(GameTest, StartSinglePlayer) {
+    connectfour::Game game;
+    game.start(1);
     std::vector<connectfour::Player> players = game.getPlayers();
     ASSERT_EQ(2, players.size());
     ASSERT_EQ(false, players.at(0).getAi());
@@ -17,7 +18,8 @@ TEST(GameTest, ConstructorSinglePlayer) {
 }
 
 TEST(GameTest, ConstructorTwoPlayers) {
-    connectfour::Game game(2);
+    connectfour::Game game;
+    game.start(2);
     std::vector<connectfour::Player> players = game.getPlayers();
     ASSERT_EQ(2, players.size());
     ASSERT_EQ(false, players.at(0).getAi());
@@ -25,8 +27,9 @@ TEST(GameTest, ConstructorTwoPlayers) {
 }
 
 TEST(GameTest, ConstructorInvalidPlayers) {
-    ASSERT_THROW(connectfour::Game game(3), std::invalid_argument);
-    ASSERT_THROW(connectfour::Game game(0), std::invalid_argument);
+    connectfour::Game game;
+    ASSERT_THROW(game.start(3), std::invalid_argument);
+    ASSERT_THROW(game.start(0), std::invalid_argument);
 }
 
 class MockView : public connectfour::IView {
@@ -35,7 +38,7 @@ public:
 };
 
 TEST(GameTest, AttachView) {
-    connectfour::Game game(2);
+    connectfour::Game game;
     MockView view1;
     MockView view2;
 
@@ -48,7 +51,7 @@ TEST(GameTest, AttachView) {
 }
 
 TEST(GameTest, DetachExistingView) {
-    connectfour::Game game(2);
+    connectfour::Game game;
     MockView view1;
     MockView view2;
     game.attach(view1);
@@ -61,7 +64,7 @@ TEST(GameTest, DetachExistingView) {
 }
 
 TEST(GameTest, DetachUnattachedView) {
-    connectfour::Game game(2);
+    connectfour::Game game;
     MockView view1;
     MockView view2;
     game.attach(view2);
@@ -73,7 +76,7 @@ TEST(GameTest, DetachUnattachedView) {
 }
 
 TEST(GameTest, NotifyViews) {
-    connectfour::Game game(2);
+    connectfour::Game game;
     MockView view1;
     MockView view2;
     EXPECT_CALL(view1, update()).Times(1);

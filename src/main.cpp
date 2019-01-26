@@ -9,9 +9,9 @@ using namespace connectfour;
 int main(int argc, char *argv[]) {
     std::cout << "Starting ConnectFour" << std::endl;
 
-    Game game(2);
+    Game game;
     GtkView view(&game, argc, argv);
 
     std::cout << "Application stopped." << std::endl;
-    return 0; // status;
+    return 0;
 }

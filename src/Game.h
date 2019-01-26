@@ -19,7 +19,9 @@ namespace connectfour {
         Game& operator=(Game&&) = default;
         ~Game() = default;
         
-        Game(int players);
+        Game();
+
+        void start(int players);
 
         void attach(IView &view);
         void detach(IView &view);

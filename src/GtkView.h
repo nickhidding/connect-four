@@ -22,6 +22,9 @@ namespace connectfour {
 
         void update();
 
+        void showMenu(GtkApplication *app, gpointer user_data);
+        void startGame(int players);
+
     private:
         GtkApplication *m_app;
         Game *m_game;
