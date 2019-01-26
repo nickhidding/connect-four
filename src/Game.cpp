@@ -37,6 +37,10 @@ Player Game::getCurrentPlayer() const {
     return m_players.at(m_current_player);
 }
 
+void Game::dropDisc(int x) {
+    std::cout << "dropDisc " + std::to_string(x) << std::endl;
+}
+
 void Game::attach(IView &view) {
     m_observers.push_back(&view);
 };

@@ -16,6 +16,13 @@ namespace connectfour {
         GAME
     };
 
+    class DropDiscEventData {
+    public:
+        IView *view;
+        int column;
+        DropDiscEventData(IView *v, int c) : view(v), column(c) {};
+    };
+
     class GtkView : public IView {
     public:
         GtkView(const GtkView&) = default;

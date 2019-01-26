@@ -2,6 +2,7 @@
 #ifndef GAME_H_
 #define GAME_H_
 
+#include <iostream>
 #include <stdexcept>
 #include <vector>
 #include <algorithm>
@@ -30,6 +31,8 @@ namespace connectfour {
         Player getCurrentPlayer() const;
 
         void getGrid(); // TODO return info
+
+        void dropDisc(int x);
 
         void attach(IView &view);
         void detach(IView &view);

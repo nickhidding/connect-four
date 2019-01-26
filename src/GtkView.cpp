@@ -75,7 +75,6 @@ void GtkView::showGame() {
     // Game information header
     game_information = gtk_frame_new("Information");
     gtk_box_pack_start(GTK_BOX(game_box), game_information, FALSE, FALSE, 0);
-
     game_frame_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 8);
     gtk_container_set_border_width (GTK_CONTAINER (game_frame_box), 8);
     gtk_container_add (GTK_CONTAINER (game_information), game_frame_box);
@@ -91,22 +90,52 @@ void GtkView::showGame() {
 
     // Create field
     game_grid = gtk_grid_new();
+    gtk_widget_set_margin_top(game_grid, 40);
+    gtk_widget_set_halign(game_grid, GTK_ALIGN_CENTER);
+    gtk_box_pack_start(GTK_BOX(game_box), game_grid, FALSE, FALSE, 0);
 
-    for (int column = 0; column <= 7; column++) {
+    // Buttons
+    for (int column = 0; column <= 6; column++) {
         GtkWidget *button;
-        button = gtk_button_new_with_label(("select " + std::to_string(column)).c_str());
+        button = gtk_button_new_with_label(("" + std::to_string(column)).c_str());
+        gtk_widget_set_margin_bottom(button, 25);
+        DropDiscEventData *event_data = new DropDiscEventData(this, column);
+        g_signal_connect(button, "clicked", G_CALLBACK(+[](GtkWidget *widget, gpointer user_data) {
+            DropDiscEventData *event_data = (DropDiscEventData*)user_data;
+            ((GtkView*)event_data->view)->m_game->dropDisc(event_data->column);
+        }), gpointer(event_data));
         gtk_grid_attach(GTK_GRID(game_grid), button, column, 0, 1, 1);
     }
 
-    for (int column = 0; column <= 7; column++) {
-        for (int row = 6; row >= 0; row--) {
-            GtkWidget *button;
-            button = gtk_button_new_with_label((std::to_string(column) + "," + std::to_string(row)).c_str());
-            gtk_grid_attach(GTK_GRID(game_grid), button, column, row, 1, 1);
+    // Spaces
+    for (int column = 0; column <= 6; column++) {
+        for (int row = 5; row >= 0; row--) {
+            GtkWidget *box;
+            GtkWidget *da;
+            GtkWidget *label;
+            
+            box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+            gtk_grid_attach(GTK_GRID(game_grid), box, column, 8 - row, 1, 1);
+
+            label = gtk_label_new (NULL);
+            gtk_label_set_markup (GTK_LABEL (label), ("<u>" + std::to_string(column) + "," + std::to_string(row) + "</u>").c_str());
+            // gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
+
+            da = gtk_drawing_area_new ();
+            gtk_widget_set_size_request (da, 80, 80);
+            gtk_widget_set_halign(da, GTK_ALIGN_CENTER);
+            gtk_box_pack_start (GTK_BOX (box), da, FALSE, FALSE, 0);
+
+            g_signal_connect (da, "draw", G_CALLBACK (+[](GtkWidget *da, cairo_t *cr, gpointer data) {
+                cairo_set_source_rgb(cr, 0, 0, 1);
+                cairo_rectangle(cr, 0, 0, 80, 80);
+                cairo_fill(cr);
+                cairo_set_source_rgb(cr, 1, 1, 1);
+                cairo_arc(cr, 40.0, 40.0, 25.0, 0, 2 * 3.14);
+                cairo_fill(cr);
+            }), NULL);
         }
     }
-
-    gtk_box_pack_start(GTK_BOX(game_box), game_grid, FALSE, FALSE, 0);
 
     gtk_widget_show_all(window);
 }
