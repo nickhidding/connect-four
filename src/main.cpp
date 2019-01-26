@@ -13,5 +13,5 @@ int main(int argc, char *argv[]) {
     GtkView view(&game, argc, argv);
 
     std::cout << "Application stopped." << std::endl;
-    return 0;
+    return view.getExitStatus();
 }

@@ -23,6 +23,7 @@ namespace connectfour {
         Game();
 
         void start(int players);
+        void reset();
 
         GameState getState() const;
 
@@ -37,7 +38,7 @@ namespace connectfour {
 
         std::vector<Player> getPlayers() const;
     private:
-        GameState m_gameState;
+        GameState m_game_state;
         std::vector<Player> m_players;
         std::vector<IView*> m_observers;
         int m_current_player;

@@ -23,16 +23,24 @@ namespace connectfour {
         GtkView& operator=(const GtkView&) = default;
         GtkView& operator=(GtkView&&) = default;
         ~GtkView() = default;
+        int getExitStatus() const {
+            return m_status;
+        };
 
         GtkView(Game *game, int argc, char **argv);
 
-        void update();
+        void update(); // Receive updates from Game
 
-        void showWindow(GtkApplication *app, gpointer user_data);
-        void showMenu(GtkApplication *app, gpointer user_data);
-        void removeMenu(GtkApplication *app, gpointer user_data);
-        void startGame(int players);
-        void showGame(GtkApplication *app, gpointer user_data);
+        void showWindow();
+
+        // Menu
+        void showMenu();
+        void removeMenu();
+
+        // Field
+        void showGame();
+        void removeGame();
+        void updateGame();
 
     private:
         GtkApplication *m_app;
@@ -49,6 +57,14 @@ namespace connectfour {
         GtkWidget *button_single_player;
         GtkWidget *button_two_players;
         GtkWidget *button_box;
+
+        // GTK game components
+        GtkWidget *game_box;
+        GtkWidget *game_information;
+        GtkWidget *game_frame_box;
+        GtkWidget *game_frame_current_player;
+        GtkWidget *game_menu_button;
+        GtkWidget *game_grid;
     };
 }
 
