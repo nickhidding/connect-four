@@ -94,49 +94,6 @@ void GtkView::showGame() {
     gtk_widget_set_halign(game_grid, GTK_ALIGN_CENTER);
     gtk_box_pack_start(GTK_BOX(game_box), game_grid, FALSE, FALSE, 0);
 
-    // Buttons
-    for (int column = 0; column <= 6; column++) {
-        GtkWidget *button;
-        button = gtk_button_new_with_label(("" + std::to_string(column)).c_str());
-        gtk_widget_set_margin_bottom(button, 25);
-        DropDiscEventData *event_data = new DropDiscEventData(this, column);
-        g_signal_connect(button, "clicked", G_CALLBACK(+[](GtkWidget *widget, gpointer user_data) {
-            DropDiscEventData *event_data = (DropDiscEventData*)user_data;
-            ((GtkView*)event_data->view)->m_game->dropDisc(event_data->column);
-        }), gpointer(event_data));
-        gtk_grid_attach(GTK_GRID(game_grid), button, column, 0, 1, 1);
-    }
-
-    // Spaces
-    for (int column = 0; column <= 6; column++) {
-        for (int row = 5; row >= 0; row--) {
-            GtkWidget *box;
-            GtkWidget *da;
-            GtkWidget *label;
-            
-            box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-            gtk_grid_attach(GTK_GRID(game_grid), box, column, 8 - row, 1, 1);
-
-            label = gtk_label_new (NULL);
-            gtk_label_set_markup (GTK_LABEL (label), ("<u>" + std::to_string(column) + "," + std::to_string(row) + "</u>").c_str());
-            // gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
-
-            da = gtk_drawing_area_new ();
-            gtk_widget_set_size_request (da, 80, 80);
-            gtk_widget_set_halign(da, GTK_ALIGN_CENTER);
-            gtk_box_pack_start (GTK_BOX (box), da, FALSE, FALSE, 0);
-
-            g_signal_connect (da, "draw", G_CALLBACK (+[](GtkWidget *da, cairo_t *cr, gpointer data) {
-                cairo_set_source_rgb(cr, 0, 0, 1);
-                cairo_rectangle(cr, 0, 0, 80, 80);
-                cairo_fill(cr);
-                cairo_set_source_rgb(cr, 1, 1, 1);
-                cairo_arc(cr, 40.0, 40.0, 25.0, 0, 2 * 3.14);
-                cairo_fill(cr);
-            }), NULL);
-        }
-    }
-
     gtk_widget_show_all(window);
 }
 
@@ -151,6 +108,70 @@ void GtkView::updateGame() {
     Player current_player = m_game->getCurrentPlayer();
     std::string current_player_text = "<span color=\"" + current_player.getColor() + "\">Current player: " + current_player.getName() + "</span>";
     gtk_label_set_markup(GTK_LABEL(game_frame_current_player), current_player_text.c_str());
+
+    // Empty the grid
+    gtk_container_foreach(GTK_CONTAINER(game_grid), (GtkCallback) gtk_widget_destroy, NULL);
+
+    // Buttons
+    Field *field = m_game->getField();
+    for (int x = 0; x <= (field->getWidth()-1); x++) {
+        GtkWidget *button;
+        button = gtk_button_new_with_label(("" + std::to_string(x)).c_str());
+        gtk_widget_set_margin_bottom(button, 25);
+        DropDiscEventData *event_data = new DropDiscEventData(this, x);
+        g_signal_connect(button, "clicked", G_CALLBACK(+[](GtkWidget *widget, gpointer user_data) {
+            DropDiscEventData *event_data = (DropDiscEventData*)user_data;
+            ((GtkView*)event_data->view)->m_game->dropDisc(event_data->column);
+        }), gpointer(event_data));
+        gtk_grid_attach(GTK_GRID(game_grid), button, x, 0, 1, 1);
+    }
+
+    // Cells
+    Cell** cells = field->getCells();
+    for (int x = 0; x <= (field->getWidth()-1); x++) {
+        for (int y = (field->getHeight()-1); y >= 0; y--) {
+            GtkWidget *box;
+            GtkWidget *da;
+            GtkWidget *label;
+            
+            box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+            gtk_grid_attach(GTK_GRID(game_grid), box, x, field->getWidth() - y, 1, 1);
+
+            label = gtk_label_new (NULL);
+            gtk_label_set_markup (GTK_LABEL (label), ("<u>x=" + std::to_string(x) + ",y=" + std::to_string(y) + "</u>").c_str());
+            // gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
+
+            da = gtk_drawing_area_new ();
+            gtk_widget_set_size_request (da, 80, 80);
+            gtk_widget_set_halign(da, GTK_ALIGN_CENTER);
+            gtk_box_pack_start (GTK_BOX (box), da, FALSE, FALSE, 0);
+
+            std::string *color;
+            if (cells[x][y].isEmpty()) {
+                color = new std::string("white");
+            } else {
+                color = new std::string(cells[x][y].getPlayer()->getColor());
+            }
+
+            g_signal_connect (da, "draw", G_CALLBACK (+[](GtkWidget *da, cairo_t *cr, gpointer data) {
+                cairo_set_source_rgb(cr, 0, 0, 1);
+                cairo_rectangle(cr, 0, 0, 80, 80);
+                cairo_fill(cr);
+                std::string color = *((std::string*)data);                
+                if (color.compare("white") == 0) {
+                    cairo_set_source_rgb(cr, 1, 1, 1);
+                } else if (color.compare("yellow") == 0) {
+                    cairo_set_source_rgb(cr, 1, 1, 0);
+                } else if (color.compare("red") == 0) {
+                    cairo_set_source_rgb(cr, 1, 0, 0);
+                }
+                cairo_arc(cr, 40.0, 40.0, 25.0, 0, 2 * 3.14);
+                cairo_fill(cr);
+            }), gpointer(color));
+        }
+    }
+    
+    gtk_widget_show_all(window);
 }
 
 void GtkView::update() {

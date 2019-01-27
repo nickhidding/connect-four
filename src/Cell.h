@@ -10,10 +10,10 @@ namespace connectfour {
 
     class Cell {
     public:
-        Cell(const Cell& cell) = default;
-        Cell(Cell&& cell) = default;
-        Cell& operator=(const Cell& cell) = default;
-        Cell& operator=(Cell&& cell) = default;
+        Cell(const Cell&) = default;
+        Cell(Cell&&) = default;
+        Cell& operator=(const Cell&) = default;
+        Cell& operator=(Cell&&) = default;
 
         Cell();
         ~Cell();

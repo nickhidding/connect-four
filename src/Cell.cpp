@@ -6,11 +6,11 @@ using namespace connectfour;
 
 Cell::Cell() {
     m_player = nullptr;
-};
+}
 
 Cell::~Cell() {
     delete m_player;
-};
+}
 
 bool Cell::isEmpty() const {
     return m_player == nullptr;

@@ -48,7 +48,10 @@ Field* Game::getField() const {
 }
 
 void Game::dropDisc(int x) {
-    std::cout << "dropDisc " + std::to_string(x) << std::endl;
+    if (m_field->dropDiscAt(x, &m_players.at(m_current_player))) {
+        m_current_player = (m_current_player == 0) ? 1 : 0;
+    }
+    notify();
 }
 
 void Game::attach(IView &view) {

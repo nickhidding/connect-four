@@ -12,7 +12,7 @@ namespace connectfour {
         Player(Player&&) = default;
         Player& operator=(const Player&) = default;
         Player& operator=(Player&&) = default;
-        ~Player() = default;
+        virtual ~Player() = default;
 
         Player(std::string name,
                bool ai,
