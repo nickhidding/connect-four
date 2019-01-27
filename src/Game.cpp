@@ -4,7 +4,9 @@
 using namespace std;
 using namespace connectfour;
 
-Game::Game() : m_game_state(GameState::MENU) {}
+Game::Game() : m_game_state(GameState::MENU) {
+    m_field = new Field(7, 6);
+}
 
 void Game::start(int players) {
     if (players < 1 || players > 2) {
@@ -16,6 +18,10 @@ void Game::start(int players) {
     m_current_player = 0;
     m_game_state = GameState::STARTED;
     notify();
+}
+
+Game::~Game() {
+    delete m_field;
 }
 
 void Game::reset() {
@@ -35,6 +41,10 @@ std::vector<Player> Game::getPlayers() const {
 
 Player Game::getCurrentPlayer() const {
     return m_players.at(m_current_player);
+}
+
+Field* Game::getField() const {
+    return new Field(*m_field);
 }
 
 void Game::dropDisc(int x) {

@@ -16,6 +16,10 @@ std::string Player::getName() const {
     return m_name;
 };
 
+void Player::setName(std::string name) {
+    m_name = name;
+};
+
 bool Player::getAi() const {
     return m_ai;
 };

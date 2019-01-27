@@ -20,6 +20,8 @@ namespace connectfour {
 
         std::string getName() const;
 
+        void setName(std::string name);
+
         bool getAi() const;
 
         std::string getColor() const;

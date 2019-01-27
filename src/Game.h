@@ -8,6 +8,7 @@
 #include <algorithm>
 
 #include "Player.h"
+#include "Field.h"
 #include "IView.h"
 #include "GameState.h"
 
@@ -19,9 +20,10 @@ namespace connectfour {
         Game(Game&&) = default;
         Game& operator=(const Game&) = default;
         Game& operator=(Game&&) = default;
-        ~Game() = default;
         
         Game();
+
+        ~Game();
 
         void start(int players);
         void reset();
@@ -30,7 +32,7 @@ namespace connectfour {
 
         Player getCurrentPlayer() const;
 
-        void getGrid(); // TODO return info
+        Field* getField() const;
 
         void dropDisc(int x);
 
@@ -43,6 +45,7 @@ namespace connectfour {
     private:
         GameState m_game_state;
         std::vector<Player> m_players;
+        Field *m_field;
         std::vector<IView*> m_observers;
         int m_current_player;
     };
