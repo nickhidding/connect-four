@@ -32,9 +32,13 @@ namespace connectfour {
 
         Player getCurrentPlayer() const;
 
+        Player* getWinningPlayer() const;
+
         Field* getField() const;
 
         void dropDisc(int x);
+
+        void update();
 
         void attach(IView &view);
         void detach(IView &view);
@@ -48,6 +52,7 @@ namespace connectfour {
         Field *m_field;
         std::vector<IView*> m_observers;
         int m_current_player;
+        Player *m_winning_player;
     };
 }
 

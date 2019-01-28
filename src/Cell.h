@@ -24,8 +24,13 @@ namespace connectfour {
 
         Player* getPlayer();
 
+        void setMarked(bool mark);
+
+        bool isMarked() const;
+
     private:
         Player *m_player;
+        bool m_marked;
     };
 }
 

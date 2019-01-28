@@ -149,6 +149,8 @@ void GtkView::updateGame() {
             std::string *color;
             if (cells[x][y].isEmpty()) {
                 color = new std::string("white");
+            } else if (cells[x][y].isMarked()) {
+                color = new std::string("black");
             } else {
                 color = new std::string(cells[x][y].getPlayer()->getColor());
             }
@@ -164,6 +166,8 @@ void GtkView::updateGame() {
                     cairo_set_source_rgb(cr, 1, 1, 0);
                 } else if (color.compare("red") == 0) {
                     cairo_set_source_rgb(cr, 1, 0, 0);
+                } else if (color.compare("black") == 0) {
+                    cairo_set_source_rgb(cr, 0, 0, 0);
                 }
                 cairo_arc(cr, 40.0, 40.0, 25.0, 0, 2 * 3.14);
                 cairo_fill(cr);
@@ -193,6 +197,23 @@ void GtkView::update() {
                 updateGame();
             }
             
+            break;
+
+        case GameState::ENDED:
+            if (m_current_view == GtkViews::GAME) {
+                updateGame();
+                Player *winning_player = m_game->getWinningPlayer();
+                if (winning_player != nullptr) {
+                    std::string text = "<span color=\"" + winning_player->getColor() + "\">" + winning_player->getName() + " has won!</span>";
+                    gtk_label_set_markup(GTK_LABEL(game_frame_current_player), text.c_str());
+                } else {
+                    std::string text = "<span color=\"black\">Game is ended</span>";
+                    gtk_label_set_markup(GTK_LABEL(game_frame_current_player), text.c_str());
+                }
+            } else {
+                m_game->reset();
+            }
+
             break;
         default:
             break;

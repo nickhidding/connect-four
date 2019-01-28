@@ -22,6 +22,10 @@ namespace connectfour {
         int getWidth() const;
         int getHeight() const;
 
+        void reset();
+
+        bool isFull() const;
+
         Cell* cellAt(unsigned int x, unsigned int y) const;
 
         Cell** getCells() const;
@@ -29,6 +33,8 @@ namespace connectfour {
         bool setDiscAt(unsigned int x, unsigned int y, Player *player);
 
         bool dropDiscAt(unsigned int x, Player *player);
+
+        Player* checkForWin() const;
 
     private:
         int m_width;
