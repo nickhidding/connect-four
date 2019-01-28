@@ -156,49 +156,117 @@ Player* Field::checkForWin() const {
         }
     }
 
-    /*
-        ______________________
-        |  |  |  |  |  |  |  |
-        |__|__|__|__|__|__|__|
-        |  |  |  |  |  |  |  |
-        |__|__|__|__|__|__|__|
-        |  |  |  |  |  |  |  |
-        |__|__|__|__|__|__|__|
-        |  |  |  |  |  |  |  |
-        |x_|__|__|__|__|__|__|
-        |  |  |  |  |  |  |  |
-        |x_|__|__|__|__|__|__|
-        |  |  |  |  |  |  |  |
-        |x_|x_|x_|x_|__|__|__|
-
-    */
-
     // Diagonal: bottom-left to top-right
-    // for (int x = 0; x < m_width - 3; x++) {
-    //     connected = 0;
-    //     connected_player = m_cells[x][0].getPlayer();
-    //     for (int y = 0; y < m_height && x+y < m_width; y++) {
-    //         if (m_cells[x+y][y].getPlayer() != nullptr && m_cells[x+y][y].getPlayer() == connected_player) {
-    //             connected++;
-    //         } else {
-    //             connected = 1;
-    //             connected_player = m_cells[x+y][y].getPlayer();
-    //         }
+    //  ______________________
+    //  |  |  |  |  |  |  |  |
+    //  |__|__|__|__|__|__|__|
+    //  |  |  |  |  |  |  |  |
+    //  |__|__|__|__|__|__|__|
+    //  |  |  |  |  |  |  |  |
+    //  |__|__|__|__|__|__|__|
+    //  |  |  |  |  |  |  |  |
+    //  |x_|__|__|__|__|__|__|
+    //  |  |  |  |  |  |  |  |
+    //  |x_|__|__|__|__|__|__|
+    //  |  |  |  |  |  |  |  |
+    //  |x_|x_|x_|x_|__|__|__|
+    for (int x = 0; x < m_width - 3; x++) {
+        connected = 0;
+        connected_player = m_cells[x][0].getPlayer();
+        for (int y = 0; y < m_height && x+y < m_width; y++) {
+            if (m_cells[x+y][y].getPlayer() != nullptr && m_cells[x+y][y].getPlayer() == connected_player) {
+                connected++;
+            } else {
+                connected = 1;
+                connected_player = m_cells[x+y][y].getPlayer();
+            }
 
-    //         if (connected >= 4) {
-    //             m_cells[x][y].setMarked(true);
-    //             // m_cells[x][y-1].setMarked(true);
-    //             // m_cells[x][y-2].setMarked(true);
-    //             // m_cells[x][y-3].setMarked(true);
-    //             return connected_player;
-    //         }
-    //     }
-    // }
+            if (connected >= 4) {
+                m_cells[x+y][y].setMarked(true);
+                m_cells[x+y-1][y-1].setMarked(true);
+                m_cells[x+y-2][y-2].setMarked(true);
+                m_cells[x+y-3][y-3].setMarked(true);
+                return connected_player;
+            }
+        }
+    }
+
+    for (int y = 0; y < m_height - 3; y++) {
+        connected = 0;
+        connected_player = m_cells[0][y].getPlayer();
+        for (int x = 0; x < m_width && y+x < m_height; x++) {
+            if (m_cells[x][y+x].getPlayer() != nullptr && m_cells[x][y+x].getPlayer() == connected_player) {
+                connected++;
+            } else {
+                connected = 1;
+                connected_player = m_cells[x][y+x].getPlayer();
+            }
+
+            if (connected >= 4) {
+                m_cells[x][y+x].setMarked(true);
+                m_cells[x-1][y+x-1].setMarked(true);
+                m_cells[x-2][y+x-2].setMarked(true);
+                m_cells[x-3][y+x-3].setMarked(true);
+                return connected_player;
+            }
+        }
+    }
 
     // Diagonal: top-left to bottom-right
+    //  ______________________
+    //  |  |  |  |  |  |  |  |
+    //  |x_|x_|x_|x_|__|__|__|
+    //  |  |  |  |  |  |  |  |
+    //  |x_|__|__|__|__|__|__|
+    //  |  |  |  |  |  |  |  |
+    //  |x_|__|__|__|__|__|__|
+    //  |  |  |  |  |  |  |  |
+    //  |__|__|__|__|__|__|__|
+    //  |  |  |  |  |  |  |  |
+    //  |__|__|__|__|__|__|__|
+    //  |  |  |  |  |  |  |  |
+    //  |__|__|__|__|__|__|__|
+    for (int x = 0; x < m_width - 3; x++) {
+        connected = 0;
+        connected_player = m_cells[x][m_height-1].getPlayer();
+        for (int y = m_height-1, offset = 0; y >= 0 && x+offset < m_width; y--, offset++) {
+            if (m_cells[x+offset][y].getPlayer() != nullptr && m_cells[x+offset][y].getPlayer() == connected_player) {
+                connected++;
+            } else {
+                connected = 1;
+                connected_player = m_cells[x+offset][y].getPlayer();
+            }
 
+            if (connected >= 4) {
+                m_cells[x+offset][y].setMarked(true);
+                m_cells[x+offset-1][y+1].setMarked(true);
+                m_cells[x+offset-2][y+2].setMarked(true);
+                m_cells[x+offset-3][y+3].setMarked(true);
+                return connected_player;
+            }
+        }
+    }
 
+    for (int y = m_height-1; y >= 3; y--) {
+        connected = 0;
+        connected_player = m_cells[0][y].getPlayer();
+        for (int x = 0; x < m_width && y-x >= 0; x++) {
+            if (m_cells[x][y-x].getPlayer() != nullptr && m_cells[x][y-x].getPlayer() == connected_player) {
+                connected++;
+            } else {
+                connected = 1;
+                connected_player = m_cells[x][y-x].getPlayer();
+            }
 
+            if (connected >= 4) {
+                m_cells[x][y-x].setMarked(true);
+                m_cells[x-1][y-x+1].setMarked(true);
+                m_cells[x-2][y-x+2].setMarked(true);
+                m_cells[x-3][y-x+3].setMarked(true);
+                return connected_player;
+            }
+        }
+    }
 
     return nullptr;
 }

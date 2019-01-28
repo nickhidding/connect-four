@@ -102,8 +102,6 @@ void GtkView::removeGame() {
 }
 
 void GtkView::updateGame() {
-    std::cout << "GtkView.cpp -> update field" << std::endl;
-
     // Display current player
     Player current_player = m_game->getCurrentPlayer();
     std::string current_player_text = "<span color=\"" + current_player.getColor() + "\">Current player: " + current_player.getName() + "</span>";
