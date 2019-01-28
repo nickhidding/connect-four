@@ -13,17 +13,19 @@ Field::Field(int width,
         throw std::invalid_argument("invalid field size");
     }
 
-    m_cells = new Cell*[width];
-    for (int i = 0; i < width; i++) {
-        m_cells[i] = new Cell[height];
+    for (int x = 0; x < width; x++) {
+        m_cells.push_back(std::vector<Cell>());
+        for (int y = 0; y < height; y++) {
+            m_cells[x].push_back(Cell());
+        }
     }
-};
+}
 
 Field::~Field() {
-    for (int i = 0; i < m_width; i++) {
-        delete [] m_cells[i];
+    for (int x = 0; x < m_width; x++) {
+        m_cells[x].clear();
     }
-    delete [] m_cells;
+    m_cells.clear();
 }
 
 int Field::getWidth() const {
@@ -65,13 +67,12 @@ Cell* Field::cellAt(unsigned int x, unsigned int y) const {
     return new Cell(m_cells[x][y]);
 }
 
-Cell** Field::getCells() const {
-    Cell **copy;
-    copy = new Cell*[m_width];
+std::vector<std::vector<Cell>> Field::getCells() const {
+    std::vector<std::vector<Cell>> copy;
     for (int x = 0; x < m_width; x++) {
-        copy[x] = new Cell[m_height];
+        copy.push_back(std::vector<Cell>());
         for (int y = 0; y < m_height; y++) {
-            copy[x][y] = Cell(m_cells[x][y]);
+            copy[x].push_back(Cell(m_cells[x][y]));
         }
     }
 
@@ -108,7 +109,7 @@ bool Field::dropDiscAt(unsigned int x, Player *player) {
     return emptyCellFound;
 }
 
-Player* Field::checkForWin() const {
+Player* Field::checkForWin() {
     int connected = 0;
     Player *connected_player = nullptr;
 

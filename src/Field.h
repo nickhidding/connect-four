@@ -3,6 +3,7 @@
 #define FIELD_H_
 
 #include <iostream>
+#include <vector>
 
 #include "Cell.h"
 
@@ -28,18 +29,18 @@ namespace connectfour {
 
         Cell* cellAt(unsigned int x, unsigned int y) const;
 
-        Cell** getCells() const;
+        std::vector<std::vector<Cell>> getCells() const;
 
         bool setDiscAt(unsigned int x, unsigned int y, Player *player);
 
         bool dropDiscAt(unsigned int x, Player *player);
 
-        Player* checkForWin() const;
+        Player* checkForWin();
 
     private:
         int m_width;
         int m_height;
-        Cell **m_cells;
+        std::vector<std::vector<Cell>> m_cells;
     };
 }
 

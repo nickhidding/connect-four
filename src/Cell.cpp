@@ -19,7 +19,7 @@ void Cell::setPlayer(Player *player) {
     m_player = player;
 }
 
-Player* Cell::getPlayer() {
+Player* Cell::getPlayer() const {
     return m_player;
 }
 

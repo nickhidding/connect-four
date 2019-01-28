@@ -45,3 +45,12 @@ TEST(CellTest, CopyConstructor) {
     ASSERT_EQ(player, cell->getPlayer());
     ASSERT_EQ(player, copy->getPlayer());
 }
+
+TEST(CellTest, Marked) {
+    connectfour::Cell *cell = new connectfour::Cell();
+    ASSERT_EQ(false, cell->isMarked());
+    cell->setMarked(true);
+    ASSERT_EQ(true, cell->isMarked());
+    cell->setMarked(false);
+    ASSERT_EQ(false, cell->isMarked());
+}

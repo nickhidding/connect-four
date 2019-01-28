@@ -22,7 +22,7 @@ namespace connectfour {
 
         void setPlayer(Player *player);
 
-        Player* getPlayer();
+        Player* getPlayer() const;
 
         void setMarked(bool mark);
 

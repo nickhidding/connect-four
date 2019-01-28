@@ -125,7 +125,7 @@ void GtkView::updateGame() {
     }
 
     // Cells
-    Cell** cells = field->getCells();
+    std::vector<std::vector<Cell>> cells = field->getCells();
     for (int x = 0; x <= (field->getWidth()-1); x++) {
         for (int y = (field->getHeight()-1); y >= 0; y--) {
             GtkWidget *box;

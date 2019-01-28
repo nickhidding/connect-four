@@ -75,3 +75,126 @@ TEST(FieldTest, SetDiscAtInvalidCoords) {
     ASSERT_THROW(field->setDiscAt(2, 3, player), std::invalid_argument);
     ASSERT_THROW(field->setDiscAt(3, 1, player), std::invalid_argument);
 }
+
+TEST(FieldTest, GetCells) {
+    Field *field = new Field(2, 4);
+    MockPlayer *player = new MockPlayer();
+    field->setDiscAt(0, 0, player);
+    std::vector<std::vector<Cell>> cells = field->getCells();
+    ASSERT_EQ(false, cells[0][0].isEmpty());
+    ASSERT_EQ(true, cells[1][3].isEmpty());
+    ASSERT_EQ(2, cells.size());
+    ASSERT_EQ(4, cells[0].size());
+}
+
+TEST(FieldTest, ResetField) {
+    Field *field = new Field(2, 4);
+    MockPlayer *player = new MockPlayer();
+    field->setDiscAt(0, 0, player);
+    std::vector<std::vector<Cell>> cells = field->getCells();
+    ASSERT_EQ(false, cells[0][0].isEmpty());
+
+    field->reset();
+
+    cells = field->getCells();
+    ASSERT_EQ(true, cells[0][0].isEmpty());
+}
+
+TEST(FieldTest, IsFull) {
+    Field *field = new Field(2, 2);
+    MockPlayer *player = new MockPlayer();
+    field->setDiscAt(0, 0, player);
+    ASSERT_EQ(false, field->isFull());
+    field->setDiscAt(0, 1, player);
+    field->setDiscAt(1, 0, player);
+    field->setDiscAt(1, 1, player);
+    ASSERT_EQ(true, field->isFull());
+}
+
+TEST(FieldTest, DropDiscAt) {
+    Field *field = new Field(2, 2);
+    MockPlayer *player = new MockPlayer();
+    field->dropDiscAt(0, player);
+    std::vector<std::vector<Cell>> cells = field->getCells();
+    ASSERT_EQ(false, cells[0][0].isEmpty());
+    ASSERT_EQ(true, cells[0][1].isEmpty());
+}
+
+TEST(FieldTest, CheckWinHorizontal) {
+    Field *field = new Field(4, 4);
+    MockPlayer *player = new MockPlayer();
+    ASSERT_EQ(nullptr, field->checkForWin());
+    field->setDiscAt(0, 1, player);
+    field->setDiscAt(1, 1, player);
+    field->setDiscAt(2, 1, player);
+    field->setDiscAt(3, 1, player);
+    ASSERT_EQ(player, field->checkForWin());
+}
+
+TEST(FieldTest, CheckWinVertical) {
+    Field *field = new Field(4, 4);
+    MockPlayer *player = new MockPlayer();
+    ASSERT_EQ(nullptr, field->checkForWin());
+    field->setDiscAt(1, 0, player);
+    field->setDiscAt(1, 1, player);
+    field->setDiscAt(1, 2, player);
+    field->setDiscAt(1, 3, player);
+    ASSERT_EQ(player, field->checkForWin());
+}
+
+TEST(FieldTest, CheckWinDiagonalBottomLeftToTopRight) {
+    Field *field = new Field(6, 6);
+    MockPlayer *player = new MockPlayer();
+    ASSERT_EQ(nullptr, field->checkForWin());
+    field->setDiscAt(1, 0, player);
+    field->setDiscAt(2, 1, player);
+    field->setDiscAt(3, 2, player);
+    field->setDiscAt(4, 3, player);
+    ASSERT_EQ(player, field->checkForWin());
+    delete field;
+
+    field = new Field(6, 6);
+    player = new MockPlayer();
+    ASSERT_EQ(nullptr, field->checkForWin());
+    field->setDiscAt(0, 1, player);
+    field->setDiscAt(1, 2, player);
+    field->setDiscAt(2, 3, player);
+    field->setDiscAt(3, 4, player);
+    ASSERT_EQ(player, field->checkForWin());
+}
+
+TEST(FieldTest, CheckWinDiagonalTopLeftToBottomRight) {
+    Field *field = new Field(6, 6);
+    MockPlayer *player = new MockPlayer();
+    ASSERT_EQ(nullptr, field->checkForWin());
+    field->setDiscAt(4, 0, player);
+    field->setDiscAt(3, 1, player);
+    field->setDiscAt(2, 2, player);
+    field->setDiscAt(1, 3, player);
+    ASSERT_EQ(player, field->checkForWin());
+    delete field;
+
+    field = new Field(6, 6);
+    player = new MockPlayer();
+    ASSERT_EQ(nullptr, field->checkForWin());
+    field->setDiscAt(5, 1, player);
+    field->setDiscAt(4, 2, player);
+    field->setDiscAt(3, 3, player);
+    field->setDiscAt(2, 4, player);
+    ASSERT_EQ(player, field->checkForWin());
+}
+
+TEST(FieldTest, CheckWinCellsMarked) {
+    Field *field = new Field(4, 4);
+    MockPlayer *player = new MockPlayer();
+    field->setDiscAt(0, 1, player);
+    field->setDiscAt(1, 1, player);
+    field->setDiscAt(2, 1, player);
+    field->setDiscAt(3, 1, player);
+    field->checkForWin();
+
+    ASSERT_TRUE(field->cellAt(0, 1)->isMarked());
+    ASSERT_TRUE(field->cellAt(1, 1)->isMarked());
+    ASSERT_TRUE(field->cellAt(2, 1)->isMarked());
+    ASSERT_TRUE(field->cellAt(3, 1)->isMarked());
+}
