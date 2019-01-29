@@ -15,7 +15,7 @@ void Game::start(int players) {
     }
     
     m_players.push_back(Player("Player 1", false, "red"));
-    m_players.push_back(Player("Player 2", (players == 1), "yellow"));
+    m_players.push_back(Player("Player 2", (players == 1), "#b2b200"));
     m_current_player = 0;
     m_game_state = GameState::STARTED;
     notify();

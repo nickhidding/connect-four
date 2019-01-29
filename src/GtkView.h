@@ -13,7 +13,8 @@ namespace connectfour {
 
     enum class GtkViews {
         MENU,
-        GAME
+        GAME,
+        GAME_ENDED
     };
 
     class DropDiscEventData {
@@ -39,6 +40,7 @@ namespace connectfour {
         void update(); // Receive updates from Game
 
         void showWindow();
+        void showMessageDialog(std::string message);
 
         // Menu
         void showMenu();
