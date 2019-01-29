@@ -3,6 +3,7 @@
 #define GAME_H_
 
 #include <iostream>
+#include <random>
 #include <stdexcept>
 #include <vector>
 #include <algorithm>

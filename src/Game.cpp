@@ -76,6 +76,14 @@ void Game::update() {
         m_winning_player = winning_player;
         notify();
     }
+
+    // Ai player
+    if (m_players.at(m_current_player).getAi()) {
+        std::mt19937 rng;
+        rng.seed(std::random_device()());
+        std::uniform_int_distribution<std::mt19937::result_type> dist6(0, m_field->getWidth()-1);
+        dropDisc(dist6(rng));
+    }
 }
 
 void Game::attach(IView &view) {
