@@ -59,12 +59,12 @@ bool Field::isFull() const {
     return !emptyCellFound;
 }
 
-Cell* Field::cellAt(unsigned int x, unsigned int y) const {
+Cell Field::cellAt(unsigned int x, unsigned int y) const {
     if (x >= m_width || y >= m_height) {
         throw std::invalid_argument("invalid cell coordinates");
     }
 
-    return new Cell(m_cells[x][y]);
+    return Cell(m_cells[x][y]);
 }
 
 std::vector<std::vector<Cell>> Field::getCells() const {

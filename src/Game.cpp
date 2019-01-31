@@ -5,7 +5,7 @@ using namespace std;
 using namespace connectfour;
 
 Game::Game() : m_game_state(GameState::MENU) {
-    m_field = new Field(7, 6);
+    m_field = make_unique<Field>(7, 6);
     m_winning_player = nullptr;
 }
 
@@ -21,9 +21,7 @@ void Game::start(int players) {
     notify();
 }
 
-Game::~Game() {
-    delete m_field;
-}
+Game::~Game() {}
 
 void Game::reset() {
     m_players.clear();
@@ -47,11 +45,11 @@ Player Game::getCurrentPlayer() const {
 }
 
 Player* Game::getWinningPlayer() const {
-    return new Player(*m_winning_player);
+    return m_winning_player != nullptr ? new Player(*m_winning_player) : nullptr;
 }
 
-Field* Game::getField() const {
-    return new Field(*m_field);
+Field Game::getField() const {
+    return Field(*m_field.get());
 }
 
 void Game::dropDisc(int x) {

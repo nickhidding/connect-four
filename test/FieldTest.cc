@@ -31,16 +31,16 @@ TEST(FieldTest, ConstructorCellsCreated) {
     ASSERT_EQ(2, field->getWidth());
     ASSERT_EQ(4, field->getHeight());
 
-    Cell *cell = field->cellAt(1, 3);
-    ASSERT_EQ(true, cell->isEmpty());
+    Cell cell = field->cellAt(1, 3);
+    ASSERT_EQ(true, cell.isEmpty());
 }
 
 TEST(FieldTest, CellAtValidCoords) {
     Field *field = new Field(2, 4);
-    Cell *cell = field->cellAt(1, 3);
-    ASSERT_EQ(true, cell->isEmpty());
+    Cell cell = field->cellAt(1, 3);
+    ASSERT_EQ(true, cell.isEmpty());
     cell = field->cellAt(0, 0);
-    ASSERT_EQ(true, cell->isEmpty());
+    ASSERT_EQ(true, cell.isEmpty());
 }
 
 TEST(FieldTest, CellAtInvalidCoords) {
@@ -56,14 +56,14 @@ TEST(FieldTest, SetDiscAt) {
     Field *field = new Field(2, 4);
     MockPlayer *player = new MockPlayer();
     
-    Cell *cell = field->cellAt(0, 0);
-    ASSERT_EQ(true, cell->isEmpty());
+    Cell cell = field->cellAt(0, 0);
+    ASSERT_EQ(true, cell.isEmpty());
     
     field->setDiscAt(0, 0, player);
-    ASSERT_EQ(true, cell->isEmpty());
+    ASSERT_EQ(true, cell.isEmpty());
 
     cell = field->cellAt(0, 0);
-    ASSERT_EQ(false, cell->isEmpty());
+    ASSERT_EQ(false, cell.isEmpty());
 }
 
 TEST(FieldTest, SetDiscAtInvalidCoords) {
@@ -193,8 +193,8 @@ TEST(FieldTest, CheckWinCellsMarked) {
     field->setDiscAt(3, 1, player);
     field->checkForWin();
 
-    ASSERT_TRUE(field->cellAt(0, 1)->isMarked());
-    ASSERT_TRUE(field->cellAt(1, 1)->isMarked());
-    ASSERT_TRUE(field->cellAt(2, 1)->isMarked());
-    ASSERT_TRUE(field->cellAt(3, 1)->isMarked());
+    ASSERT_TRUE(field->cellAt(0, 1).isMarked());
+    ASSERT_TRUE(field->cellAt(1, 1).isMarked());
+    ASSERT_TRUE(field->cellAt(2, 1).isMarked());
+    ASSERT_TRUE(field->cellAt(3, 1).isMarked());
 }

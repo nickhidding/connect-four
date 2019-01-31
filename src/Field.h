@@ -27,7 +27,7 @@ namespace connectfour {
 
         bool isFull() const;
 
-        Cell* cellAt(unsigned int x, unsigned int y) const;
+        Cell cellAt(unsigned int x, unsigned int y) const;
 
         std::vector<std::vector<Cell>> getCells() const;
 

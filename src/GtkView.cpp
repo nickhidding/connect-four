@@ -111,8 +111,8 @@ void GtkView::updateGame() {
     gtk_container_foreach(GTK_CONTAINER(game_grid), (GtkCallback) gtk_widget_destroy, NULL);
 
     // Buttons
-    Field *field = m_game->getField();
-    for (int x = 0; x <= (field->getWidth()-1); x++) {
+    Field field = m_game->getField();
+    for (int x = 0; x <= (field.getWidth()-1); x++) {
         GtkWidget *button;
         button = gtk_button_new_with_label(("" + std::to_string(x)).c_str());
         gtk_widget_set_margin_bottom(button, 25);
@@ -125,15 +125,15 @@ void GtkView::updateGame() {
     }
 
     // Cells
-    std::vector<std::vector<Cell>> cells = field->getCells();
-    for (int x = 0; x <= (field->getWidth()-1); x++) {
-        for (int y = (field->getHeight()-1); y >= 0; y--) {
+    std::vector<std::vector<Cell>> cells = field.getCells();
+    for (int x = 0; x <= (field.getWidth()-1); x++) {
+        for (int y = (field.getHeight()-1); y >= 0; y--) {
             GtkWidget *box;
             GtkWidget *da;
             GtkWidget *label;
             
             box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-            gtk_grid_attach(GTK_GRID(game_grid), box, x, field->getWidth() - y, 1, 1);
+            gtk_grid_attach(GTK_GRID(game_grid), box, x, field.getWidth() - y, 1, 1);
 
             label = gtk_label_new (NULL);
             gtk_label_set_markup (GTK_LABEL (label), ("<u>x=" + std::to_string(x) + ",y=" + std::to_string(y) + "</u>").c_str());
@@ -172,8 +172,6 @@ void GtkView::updateGame() {
             }), gpointer(color));
         }
     }
-
-    delete field;
     
     gtk_widget_show_all(window);
 }

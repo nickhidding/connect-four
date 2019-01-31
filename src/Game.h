@@ -3,6 +3,7 @@
 #define GAME_H_
 
 #include <iostream>
+#include <memory>
 #include <random>
 #include <stdexcept>
 #include <vector>
@@ -35,7 +36,7 @@ namespace connectfour {
 
         Player* getWinningPlayer() const;
 
-        Field* getField() const;
+        Field getField() const;
 
         void dropDisc(int x);
 
@@ -50,7 +51,7 @@ namespace connectfour {
     private:
         GameState m_game_state;
         std::vector<Player> m_players;
-        Field *m_field;
+        std::unique_ptr<Field> m_field;
         std::vector<IView*> m_observers;
         int m_current_player;
         Player *m_winning_player;
