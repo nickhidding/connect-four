@@ -2,6 +2,10 @@
 
 Connect Four build with C++ using CMake
 
+## Screenshot
+
+![Image of Connect Four](connect-four.png)
+
 ## Build on Ubuntu 18.04 LTS
 
 Required packages:
