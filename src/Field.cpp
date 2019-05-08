@@ -4,8 +4,8 @@
 using namespace std;
 using namespace connectfour;
 
-Field::Field(int width,
-             int height)
+Field::Field(unsigned int width,
+             unsigned int height)
         :
         m_width(width),
         m_height(height) {
@@ -13,16 +13,16 @@ Field::Field(int width,
         throw std::invalid_argument("invalid field size");
     }
 
-    for (int x = 0; x < width; x++) {
+    for (unsigned int x = 0; x < width; x++) {
         m_cells.push_back(std::vector<Cell>());
-        for (int y = 0; y < height; y++) {
+        for (unsigned int y = 0; y < height; y++) {
             m_cells[x].push_back(Cell());
         }
     }
 }
 
 Field::~Field() {
-    for (int x = 0; x < m_width; x++) {
+    for (unsigned int x = 0; x < m_width; x++) {
         m_cells[x].clear();
     }
     m_cells.clear();
@@ -37,8 +37,8 @@ int Field::getHeight() const {
 }
 
 void Field::reset() {
-    for (int x = 0; x < m_width; x++) {
-        for (int y = 0; y < m_height; y++) {
+    for (unsigned int x = 0; x < m_width; x++) {
+        for (unsigned int y = 0; y < m_height; y++) {
             m_cells[x][y].setPlayer(nullptr);
             m_cells[x][y].setMarked(false);
         }
@@ -47,8 +47,8 @@ void Field::reset() {
 
 bool Field::isFull() const {
     bool emptyCellFound = false;
-    for (int x = 0; x < m_width; x++) {
-        for (int y = 0; y < m_height; y++) {
+    for (unsigned int x = 0; x < m_width; x++) {
+        for (unsigned int y = 0; y < m_height; y++) {
             if (m_cells[x][y].isEmpty()) {
                 emptyCellFound = true;
                 break;
@@ -69,9 +69,9 @@ Cell Field::cellAt(unsigned int x, unsigned int y) const {
 
 std::vector<std::vector<Cell>> Field::getCells() const {
     std::vector<std::vector<Cell>> copy;
-    for (int x = 0; x < m_width; x++) {
+    for (unsigned int x = 0; x < m_width; x++) {
         copy.push_back(std::vector<Cell>());
-        for (int y = 0; y < m_height; y++) {
+        for (unsigned int y = 0; y < m_height; y++) {
             copy[x].push_back(Cell(m_cells[x][y]));
         }
     }
@@ -98,7 +98,7 @@ bool Field::dropDiscAt(unsigned int x, Player *player) {
     }
 
     bool emptyCellFound = false;
-    for (int i = 0; i < m_height; i++) {
+    for (unsigned int i = 0; i < m_height; i++) {
         if (m_cells[x][i].isEmpty()) {
             emptyCellFound = true;
             setDiscAt(x, i, player);
@@ -114,10 +114,10 @@ Player* Field::checkForWin() {
     Player *connected_player = nullptr;
 
     // Horizontal
-    for (int y = 0; y < m_height; y++) {
+    for (unsigned int y = 0; y < m_height; y++) {
         connected = 0;
         connected_player = m_cells[0][y].getPlayer();
-        for (int x = 0; x < m_width; x++) {
+        for (unsigned int x = 0; x < m_width; x++) {
             if (m_cells[x][y].getPlayer() != nullptr && m_cells[x][y].getPlayer() == connected_player) {
                 connected++;
             } else {
@@ -136,10 +136,10 @@ Player* Field::checkForWin() {
     }
 
     // Vertical
-    for (int x = 0; x < m_width; x++) {
+    for (unsigned int x = 0; x < m_width; x++) {
         connected = 0;
         connected_player = m_cells[x][0].getPlayer();
-        for (int y = 0; y < m_height; y++) {
+        for (unsigned int y = 0; y < m_height; y++) {
             if (m_cells[x][y].getPlayer() != nullptr && m_cells[x][y].getPlayer() == connected_player) {
                 connected++;
             } else {
@@ -171,10 +171,10 @@ Player* Field::checkForWin() {
     //  |x_|__|__|__|__|__|__|
     //  |  |  |  |  |  |  |  |
     //  |x_|x_|x_|x_|__|__|__|
-    for (int x = 0; x < m_width - 3; x++) {
+    for (unsigned int x = 0; x < m_width - 3; x++) {
         connected = 0;
         connected_player = m_cells[x][0].getPlayer();
-        for (int y = 0; y < m_height && x+y < m_width; y++) {
+        for (unsigned int y = 0; y < m_height && x+y < m_width; y++) {
             if (m_cells[x+y][y].getPlayer() != nullptr && m_cells[x+y][y].getPlayer() == connected_player) {
                 connected++;
             } else {
@@ -192,10 +192,10 @@ Player* Field::checkForWin() {
         }
     }
 
-    for (int y = 0; y < m_height - 3; y++) {
+    for (unsigned int y = 0; y < m_height - 3; y++) {
         connected = 0;
         connected_player = m_cells[0][y].getPlayer();
-        for (int x = 0; x < m_width && y+x < m_height; x++) {
+        for (unsigned int x = 0; x < m_width && y+x < m_height; x++) {
             if (m_cells[x][y+x].getPlayer() != nullptr && m_cells[x][y+x].getPlayer() == connected_player) {
                 connected++;
             } else {
@@ -227,7 +227,7 @@ Player* Field::checkForWin() {
     //  |__|__|__|__|__|__|__|
     //  |  |  |  |  |  |  |  |
     //  |__|__|__|__|__|__|__|
-    for (int x = 0; x < m_width - 3; x++) {
+    for (unsigned int x = 0; x < m_width - 3; x++) {
         connected = 0;
         connected_player = m_cells[x][m_height-1].getPlayer();
         for (int y = m_height-1, offset = 0; y >= 0 && x+offset < m_width; y--, offset++) {
@@ -251,7 +251,7 @@ Player* Field::checkForWin() {
     for (int y = m_height-1; y >= 3; y--) {
         connected = 0;
         connected_player = m_cells[0][y].getPlayer();
-        for (int x = 0; x < m_width && y-x >= 0; x++) {
+        for (int x = 0; ((unsigned int) x) < m_width && y-x >= 0; x++) {
             if (m_cells[x][y-x].getPlayer() != nullptr && m_cells[x][y-x].getPlayer() == connected_player) {
                 connected++;
             } else {

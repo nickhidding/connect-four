@@ -16,7 +16,7 @@ namespace connectfour {
         Field& operator=(const Field&) = default;
         Field& operator=(Field&&) = default;
         
-        Field(int width, int height);
+        Field(unsigned int width, unsigned int height);
 
         ~Field();
 
@@ -38,8 +38,8 @@ namespace connectfour {
         Player* checkForWin();
 
     private:
-        int m_width;
-        int m_height;
+        unsigned int m_width;
+        unsigned int m_height;
         std::vector<std::vector<Cell>> m_cells;
     };
 }

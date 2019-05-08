@@ -12,6 +12,7 @@ pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
 # Include entry point & sources
 include_directories("${PROJECT_BINARY_DIR}")
 file(GLOB SOURCES *.h *.cpp)
+set(CMAKE_CXX_FLAGS "-Wall -Werror -g")
 add_executable(ConnectFour main.cpp ${SOURCES})
 set_property(TARGET ConnectFour PROPERTY ENABLE_EXPORTS true)
 
